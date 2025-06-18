@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>🌿 Bukit Kiara 🌿</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #111; color: white; overflow: hidden; }
+
+    #loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: black;
+      z-index: 999;
+    }
+
+    .gallery {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background: rgba(34, 34, 34, 0.9);
+      padding: 12px;
+      gap: 12px;
+      z-index: 10;
+      border-top: 1px solid #444;
+    }
+
+    .gallery img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, border 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .gallery img:hover, .gallery img.active {
+      transform: scale(1.1);
+      border-color: #9fe870;
+      box-shadow: 0 0 10px #9fe87055;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">📷 Starting AR... Please allow camera access</div>
+
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true"
+    arjs="sourceType: webcam; debugUIEnabled: false;">
+
+    <a-assets>
+      <a-asset-item id="colored_flower" src="models/colored_flower.glb"></a-asset-item>
+      <a-asset-item id="margarita_flower_bush" src="models/margarita_flower_bush.glb"></a-asset-item>
+      <a-asset-item id="hiasan_pokok_kristal" src="models/hiasan_pokok_kristal.glb"></a-asset-item>
+      <a-asset-item id="snake_model" src="models/snake_model.glb"></a-asset-item>
+      <a-asset-item id="hairy_woodpecker" src="models/hairy_woodpecker.glb"></a-asset-item>
+    </a-assets>
+
+    <a-marker preset="hiro">
+      <a-entity id="colored_flower_model" gltf-model="#colored_flower" scale="0.05 0.05 0.05" visible="true"></a-entity>
+      <a-entity id="margarita_model" gltf-model="#margarita_flower_bush" scale="0.05 0.05 0.05" visible="false"></a-entity>
+      <a-entity id="kristal_model" gltf-model="#hiasan_pokok_kristal" scale="0.1 0.1 0.1" visible="false"></a-entity>
+      <a-entity id="snake_model_entity" gltf-model="#snake_model" scale="0.5 0.5 0.5" visible="false"></a-entity>
+      <a-entity id="woodpecker_model" gltf-model="#hairy_woodpecker" scale="0.01 0.01 0.01" visible="false"></a-entity>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <div class="gallery">
+    <img src="assets/colored_flower.jpg" onclick="switchModel(this, 'colored_flower')" class="active">
+    <img src="assets/margarita_flower.jpg" onclick="switchModel(this, 'margarita_flower_bush')">
+    <img src="assets/pokok_kristal.jpg" onclick="switchModel(this, 'hiasan_pokok_kristal')">
+    <img src="assets/snake.jpg" onclick="switchModel(this, 'snake_model')">
+    <img src="assets/woodpecker.jpg" onclick="switchModel(this, 'hairy_woodpecker')">
+  </div>
+
+  <script>
+    function switchModel(el, name) {
+      const modelIds = {
+        'colored_flower': 'colored_flower_model',
+        'margarita_flower_bush': 'margarita_model',
+        'hiasan_pokok_kristal': 'kristal_model',
+        'snake_model': 'snake_model_entity',
+        'hairy_woodpecker': 'woodpecker_model'
+      };
+
+      for (const key in modelIds) {
+        const entity = document.getElementById(modelIds[key]);
+        entity.setAttribute('visible', key === name);
+      }
+
+      document.querySelectorAll('.gallery img').forEach(img => img.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const checkReady = setInterval(() => {
+        const video = document.querySelector('video');
+        if (video && video.readyState >= 2) {
+          document.getElementById('loading').style.display = 'none';
+          clearInterval(checkReady);
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>

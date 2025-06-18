@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>🌿 Bukit Kiara 🌿</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #9fe870;
+      text-shadow: 0 0 6px #9fe87055;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+
+    .qr-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      max-width: 900px;
+    }
+
+    .qr-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,255,100,0.05);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .qr-card:hover {
+      transform: scale(1.05);
+    }
+
+    .qr-card img {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .qr-card img.enlarged {
+      width: 320px;
+      height: 320px;
+      z-index: 100;
+    }
+
+    .qr-card h2 {
+      font-size: 1rem;
+      color: #9fe870;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 Discover Flora and Fauna in AR</h1>
+  <p>Scan any QR code below to view the AR experience with your camera.</p>
+
+  <div class="qr-container">
+    <div class="qr-card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=markerbased.html?model=colored_flower&size=160x160" alt="Colored Flower QR" onclick="toggleQR(this)">
+      <h2>Colored Flower</h2>
+    </div>
+    <div class="qr-card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=markerbased.html?model=margarita_flower_bush&size=160x160" alt="Margarita Flower QR" onclick="toggleQR(this)">
+      <h2>Margarita Flower Bush</h2>
+    </div>
+    <div class="qr-card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=markerbased.html?model=hiasan_pokok_kristal&size=160x160" alt="Kristal Plant QR" onclick="toggleQR(this)">
+      <h2>Kristal Decoration Plant</h2>
+    </div>
+    <div class="qr-card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=markerbased.html?model=snake_model&size=160x160" alt="Snake QR" onclick="toggleQR(this)">
+      <h2>Snake</h2>
+    </div>
+    <div class="qr-card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=markerbased.html?model=hairy_woodpecker&size=160x160" alt="Woodpecker QR" onclick="toggleQR(this)">
+      <h2>Hairy Woodpecker</h2>
+    </div>
+  </div>
+
+  <script>
+    function toggleQR(img) {
+      const enlarged = document.querySelector('.qr-card img.enlarged');
+      if (enlarged && enlarged !== img) {
+        enlarged.classList.remove('enlarged');
+      }
+      img.classList.toggle('enlarged');
+    }
+  </script>
+</body>
+</html>
